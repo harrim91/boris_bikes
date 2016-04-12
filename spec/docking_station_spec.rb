@@ -26,8 +26,8 @@ describe DockingStation do
       bike = Bike.new
       expect(subject.dock(bike)).to eq bike
     end
-    it "does not allow you to dock a bike when the dock is full" do
-      subject.dock(Bike.new)
+    it "does not allow you to dock a bike when the dock contains more than 20 bikes" do
+      20.times { subject.dock(Bike.new) }
       expect { subject.dock(Bike.new) }.to raise_error "The dock is full"
     end
   end
