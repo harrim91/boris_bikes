@@ -1,19 +1,14 @@
-require "./lib/bike.rb"
+require_relative "bike"
 
 class DockingStation
-  attr_accessor :docked_bikes
-
-  def initialize
-    @docked_bikes = []
-  end
-
+  attr_reader :bike
   def release_bike
-    Bike.new
+    raise "No bikes available" unless @bike
+    @bike
   end
 
   def dock(bike)
-    self.docked_bikes << bike
+    raise "The dock is full" if @bike
+    @bike = bike
   end
-
-
 end
