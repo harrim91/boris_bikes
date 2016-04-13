@@ -8,6 +8,7 @@ stn = DockingStation.new
 # I'd like a docking station to release a bike.
 
 bike = stn.release_bike  #=> Bike object
+raise "bike is not a Bike" unless bike.class == Bike
 
 # As a person,
 # So that I can use a good bike,
@@ -21,7 +22,7 @@ bike.working? #=> true
 
 bike2 = Bike.new
 
-stn.dock(bike2)  #=> bike2
+raise "dock does not return docked bike" unless stn.dock(bike2) == bike2
 
 # As a member of the public
 # So I can decide whether to use the docking station
