@@ -42,3 +42,10 @@ raise "dock returns a different bike to the docked bike" unless stn.release_bike
 empty_stn = DockingStation.new
 
 #raise "station releases a bike when it is empty" if stn.release_bike.class == Bike
+
+# As a maintainer of the system,
+# So that I can control the distribution of bikes,
+# I'd like docking stations not to accept more bikes than their capacity.
+
+bike3 = Bike.new
+raise "can dock a bike at a full station" if stn.dock bike3 == bike3

@@ -4,7 +4,7 @@ class DockingStation
 
   def release_bike
     raise "Docking Station is empty" unless @bike
-    Bike.new
+    @bike
   end
 
   def dock(bike)
