@@ -30,3 +30,11 @@ raise "#dock does not return docked bike" unless stn.dock(bike) == bike
 # I want to see a bike that has been docked
 
 raise "#bike does not return the docked bike" unless stn.bike == bike
+
+# As a member of the public,
+# So that I am not confused and charged unnecessarily,
+# I'd like docking stations not to release bikes when there are none available.
+
+empty_stn = DockingStation.new
+
+raise "station releases a bike when it is empty" if empty_stn.release_bike.class == Bike
