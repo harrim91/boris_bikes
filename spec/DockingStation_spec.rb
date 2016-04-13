@@ -27,10 +27,15 @@ describe DockingStation do
       subject.dock Bike.new
       expect {subject.dock Bike.new }.to raise_error "Docking station is full"
     end
+
   end
 
   describe "#bike" do
-    it "returns the docked bike." do
+    it "returns an array." do
+      subject.dock Bike.new
+      expect(subject.bikes).to be_an Array
+    end
+    it "returns the docked bikes." do
       bike = Bike.new
       subject.dock(bike)
       expect(subject.bike).to eq bike
