@@ -32,7 +32,7 @@ raise "#dock does not return docked bike" unless stn_2.dock(bike2) == bike2
 # So I can decide whether to use the docking station
 # I want to see a bike that has been docked
 
-raise "#bike does not return the docked bike" unless stn_2.bike == bike2
+raise "#bike does not return the docked bike" unless stn_2.bikes == [bike2]
 
 # As a member of the public,
 # So that I am not confused and charged unnecessarily,
@@ -57,3 +57,6 @@ bike3 = Bike.new
 
 20.times {empty_stn.dock Bike.new}
 raise "cant hold more than one bike." unless empty_stn.bikes.length > 1
+
+empty_stn.dock Bike.new
+raise "can hold more than 20 bikes" if empty_stn.bikes.length > 20
