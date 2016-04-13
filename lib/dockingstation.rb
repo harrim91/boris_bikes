@@ -9,4 +9,8 @@ class DockingStation
     @bike = bike
   end
 
+  def bike
+
+  end
+
 end
