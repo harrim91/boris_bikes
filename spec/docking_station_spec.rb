@@ -44,14 +44,23 @@ describe DockingStation do
   end
 
   describe "#bikes" do
-    it "returns an array." do
+    it "returns an array" do
       subject.dock Bike.new
       expect(subject.bikes).to be_an Array
     end
-    it "returns the docked bikes." do
+    it "returns the docked bikes" do
       bike = Bike.new
       subject.dock(bike)
       expect(subject.bikes).to eq [bike]
+    end
+  end
+
+  describe "#report_broken" do
+    it "reports the bike as broken" do
+      bike = Bike.new
+      subject.dock(bike)
+      subject.report_broken(bike)
+      expect(bike).not_to be_working
     end
   end
 end
