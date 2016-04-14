@@ -1,10 +1,8 @@
 require "docking_station"
 
 describe DockingStation do
-  it { expect(subject).to respond_to :release_bike }
+  it { expect(subject).to respond_to(:release_bike, :bikes, :capacity) }
   it { expect(subject).to respond_to(:dock).with(1).argument }
-  it { expect(subject).to respond_to :bikes }
-  it { expect(subject).to respond_to :capacity }
 
   describe "#release_bike" do
     it "returns a working docked bike" do
@@ -20,9 +18,13 @@ describe DockingStation do
   end
 
   describe "#capacity" do
-  	it "defaults to DEFAULT_CAPACITY if no capacity is given" do
+  	it "returns DEFAULT_CAPACITY if no capacity is given when initializing" do
   		expect(subject.capacity).to eq DockingStation::DEFAULT_CAPACITY
-    end 
+    end
+    it "returns given capacity if one is given when initializing" do
+      stn = DockingStation.new 30
+      expect(stn.capacity).to eq 30
+    end
   end
 
   describe "#dock" do
