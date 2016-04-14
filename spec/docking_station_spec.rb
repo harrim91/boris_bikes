@@ -19,6 +19,12 @@ describe DockingStation do
     end
   end
 
+  describe "#capacity" do
+  	it "defaults to DEFAULT_CAPACITY if no capacity is given" do
+  		expect(subject.capacity).to eq DockingStation::DEFAULT_CAPACITY
+    end 
+  end
+
   describe "#dock" do
     it "returns the docked bike" do
       bike = Bike.new
@@ -32,7 +38,6 @@ describe DockingStation do
       DockingStation::DEFAULT_CAPACITY.times { subject.dock Bike.new }
       expect {subject.dock Bike.new }.to raise_error "Docking station is full"
     end
-
   end
 
   describe "#bike" do
@@ -47,3 +52,5 @@ describe DockingStation do
     end
   end
 end
+
+

@@ -8,6 +8,9 @@ class DockingStation
     @bikes = []
   end
 
+  def capacity
+  end
+
   def release_bike
     raise "Docking Station is empty" if empty?
     @bikes.first
