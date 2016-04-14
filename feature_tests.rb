@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require "./lib/dockingstation"
+require "./lib/docking_station"
 require "./lib/bike"
 
 stn = DockingStation.new
@@ -56,7 +56,17 @@ bike3 = Bike.new
 # I want a docking station to have a default capacity of 20 bikes.
 
 20.times {empty_stn.dock Bike.new}
-raise "cant hold more than one bike." unless empty_stn.bikes.length > 1
+raise "cant hold more than one bike." unless empty_stn.bikes.count > 1
 
-empty_stn.dock Bike.new
-raise "can hold more than 20 bikes" if empty_stn.bikes.length > 20
+# empty_stn.dock Bike.new
+# raise "can hold more than 20 bikes" if empty_stn.bikes.count > 20
+
+# As a system maintainer,
+# So that busy areas can be served more effectively,
+# I want to be able to specify a larger capacity when necessary.
+
+stn_default_capacity = DockingStation.new
+raise "default capacity is not 20" unless stn_default_capacity.capacity == 20
+
+stn_manual_capacity = DockingStation.new(30)
+raise "default capacity can't be manually changed" unless stn_manual_capacity.capacity == 30

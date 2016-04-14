@@ -1,9 +1,10 @@
-require "dockingstation"
+require "docking_station"
 
 describe DockingStation do
   it { expect(subject).to respond_to :release_bike }
   it { expect(subject).to respond_to(:dock).with(1).argument }
   it { expect(subject).to respond_to :bikes }
+  it { expect(subject).to respond_to :capacity }
 
   describe "#release_bike" do
     it "returns a working docked bike" do
