@@ -10,14 +10,14 @@ stn.dock bike
 # As a person,
 # So that I can use a bike,
 # I'd like a docking station to release a bike.
-
-raise "bike is not a Bike" unless stn.release_bike.class == Bike
+released_bike = stn.release_bike
+raise "bike is not a Bike" unless released_bike.class == Bike
 
 # As a person,
 # So that I can use a good bike,
 # I'd like to see if a bike is working
 
-raise "bike is not working" unless stn.release_bike.working?
+raise "bike is not working" unless released_bike.working?
 
 # As a member of the public
 # So I can return bikes I've hired
@@ -26,7 +26,7 @@ raise "bike is not working" unless stn.release_bike.working?
 bike2 = Bike.new
 stn_2 = DockingStation.new
 
-raise "#dock does not return docked bike" unless stn_2.dock(bike2) == bike2
+raise "#dock does not return list of docked bikes" unless stn_2.dock(bike2) == [bike2]
 
 # As a member of the public
 # So I can decide whether to use the docking station
@@ -70,3 +70,39 @@ raise "default capacity is not 20" unless stn_default_capacity.capacity == 20
 
 stn_manual_capacity = DockingStation.new(30)
 raise "default capacity can't be manually changed" unless stn_manual_capacity.capacity == 30
+
+# As a member of the public,
+# So that I reduce the chance of getting a broken bike in future,
+# I'd like to report a bike as broken when I return it.
+
+stn = DockingStation.new
+bike = Bike.new
+stn.dock bike
+stn.report_broken(bike)
+raise "bike still has status of working" if bike.working?
+
+# As a maintainer of the system,
+# So that I can manage broken bikes and not disappoint users,
+# I'd like docking stations not to release broken bikes.
+
+stn = DockingStation.new
+bike = Bike.new
+bike2 = Bike.new
+bike3 = Bike.new
+stn.dock bike
+stn.dock bike2
+stn.dock bike3
+stn.report_broken bike
+stn.report_broken bike3
+
+released_bike = stn.release_bike
+raise "released a broken bike" unless released_bike == bike2
+
+#now the dock only has broken bikes
+released_bike = stn.release_bike
+raise "released a broken bike" if released_bike.class = Bike
+
+
+# As a maintainer of the system,
+# So that I can manage broken bikes and not disappoint users,
+# I'd like docking stations to accept returning bikes (broken or not).

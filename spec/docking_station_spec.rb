@@ -2,7 +2,7 @@ require "docking_station"
 
 describe DockingStation do
   it { expect(subject).to respond_to(:release_bike, :bikes, :capacity) }
-  it { expect(subject).to respond_to(:dock).with(1).argument }
+  it { expect(subject).to respond_to(:dock, :report_broken).with(1).argument }
 
   describe "#release_bike" do
     it "returns a working docked bike" do
@@ -55,5 +55,3 @@ describe DockingStation do
     end
   end
 end
-
-
