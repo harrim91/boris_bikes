@@ -1,11 +1,12 @@
 require "docking_station"
 
 describe DockingStation do
-  it { expect(subject).to respond_to(:release_bike, :bikes, :capacity) }
+  it { expect(subject).to respond_to(:release_bike, :bikes, :capacity, :release_broken_bikes) }
   it { expect(subject).to respond_to(:dock).with(1).argument }
 
   let(:bike) { double(:bike, working?: true) }
   let(:broken_bike) { double(:broken_bike, working?: false) }
+
 
   describe "#release_bike" do
     it "returns a working bike" do
@@ -72,6 +73,25 @@ describe DockingStation do
     it "returns the docked bikes" do
       subject.dock bike
       expect(subject.bikes).to eq [bike]
+    end
+  end
+
+  describe "#release_broken_bikes" do
+    it "returns an array of the broken bikes" do
+      3.times do
+        subject.dock bike
+        subject.dock broken_bike
+      end
+      expect(subject.release_broken_bikes).to eq [broken_bike, broken_bike, broken_bike]
+    end
+
+    it "removes broken bikes from dock" do
+      3.times do
+        subject.dock bike
+        subject.dock broken_bike
+      end
+      subject.release_broken_bikes
+      expect(subject.bikes).to eq [bike, bike, bike]
     end
   end
 end

@@ -19,6 +19,12 @@ class DockingStation
     @bikes << bike
   end
 
+  def release_broken_bikes
+    broken_bikes = @bikes.select { |bike| !bike.working? }
+    @bikes.delete_if { |bike| broken_bikes.include?(bike) }
+    broken_bikes
+  end
+
   private
 
   def full?
