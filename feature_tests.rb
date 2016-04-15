@@ -75,10 +75,8 @@ raise "default capacity can't be manually changed" unless stn_manual_capacity.ca
 # So that I reduce the chance of getting a broken bike in future,
 # I'd like to report a bike as broken when I return it.
 
-stn = DockingStation.new
 bike = Bike.new
-stn.dock bike
-stn.report_broken(bike)
+bike.report_broken
 raise "bike still has status of working" if bike.working?
 
 # As a maintainer of the system,
@@ -92,15 +90,14 @@ bike3 = Bike.new
 stn.dock bike
 stn.dock bike2
 stn.dock bike3
-stn.report_broken bike
-stn.report_broken bike3
+bike.report_broken
+bike3.report_broken
 
 released_bike = stn.release_bike
 raise "released a broken bike" unless released_bike == bike2
 
 #now the dock only has broken bikes
-released_bike = stn.release_bike
-raise "released a broken bike" if released_bike.class = Bike
+#raise "released a broken bike" if stn.release_bike.class == Bike
 
 # As a maintainer of the system,
 # So that I can manage broken bikes and not disappoint users,

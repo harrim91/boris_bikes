@@ -2,7 +2,7 @@ require "docking_station"
 
 describe DockingStation do
   it { expect(subject).to respond_to(:release_bike, :bikes, :capacity) }
-  it { expect(subject).to respond_to(:dock, :report_broken).with(1).argument }
+  it { expect(subject).to respond_to(:dock).with(1).argument }
 
   describe "#release_bike" do
     it "returns a working docked bike" do
@@ -13,8 +13,32 @@ describe DockingStation do
       expect(released_bike).to eq bike
       expect(released_bike).to be_working
     end
+
     it "raises an error if the dock is empty" do
-      expect { subject.release_bike }.to raise_error "Docking Station is empty"
+      expect { subject.release_bike }.to raise_error "No working bikes available"
+    end
+
+    it "raises an error if there are only broken bikes" do
+      bike = Bike.new
+      subject.dock bike
+      bike.report_broken
+      expect { subject.release_bike }.to raise_error "No working bikes available"
+    end
+
+    it "if not all bikes are broken, release the working bike" do
+      working_bike = Bike.new
+      broken_bike = Bike.new
+      subject.dock(working_bike)
+      subject.dock(broken_bike)
+      broken_bike.report_broken
+      expect(subject.release_bike).to eq working_bike
+    end
+
+    it "removes the bike from the docking station" do
+      bike = Bike.new
+      subject.dock bike
+      subject.release_bike
+      expect(subject.bikes).not_to include bike
     end
   end
 
@@ -52,15 +76,6 @@ describe DockingStation do
       bike = Bike.new
       subject.dock(bike)
       expect(subject.bikes).to eq [bike]
-    end
-  end
-
-  describe "#report_broken" do
-    it "reports the bike as broken" do
-      bike = Bike.new
-      subject.dock(bike)
-      subject.report_broken(bike)
-      expect(bike).not_to be_working
     end
   end
 end

@@ -10,18 +10,15 @@ class DockingStation
   end
 
   def release_bike
-    raise "Docking Station is empty" if empty?
-    @bikes.pop
+    working_bikes = @bikes.select { |bike| bike.working? }
+    raise "No working bikes available" if working_bikes.empty?
+    @bikes.delete(working_bikes.first)
   end
 
   def dock(bike)
     raise "Docking station is full" if full?
     @bikes << bike
   end
-
-  def report_broken(bike)
-  end
-
 
   private
 
