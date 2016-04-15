@@ -117,7 +117,8 @@ raise "didn't release BROKEN bikes" unless broken_bikes == [broken_bike, broken_
 raise "didn't release bikes" unless stn.bikes == [bike, bike, bike]
 
 van.pick_up broken_bikes
-van.bikes == broken_bikes
+raise "van didn't pick up any bikes" if van.cargo.empty?
+raise "van didn't pick up correct bikes" unless van.cargo == broken_bikes
 
 
 # As a maintainer of the system,
