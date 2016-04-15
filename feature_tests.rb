@@ -87,11 +87,11 @@ stn = DockingStation.new
 bike = Bike.new
 bike2 = Bike.new
 bike3 = Bike.new
+bike.report_broken
+bike3.report_broken
 stn.dock bike
 stn.dock bike2
 stn.dock bike3
-bike.report_broken
-bike3.report_broken
 
 released_bike = stn.release_bike
 raise "released a broken bike" unless released_bike == bike2
@@ -102,3 +102,22 @@ raise "released a broken bike" unless released_bike == bike2
 # As a maintainer of the system,
 # So that I can manage broken bikes and not disappoint users,
 # I'd like docking stations to accept returning bikes (broken or not).
+
+stn = DockingStation.new
+bike = Bike.new
+broken_bike = Bike.new.report_broken
+van = Van.new
+stn.dock bike
+stn.dock broken_bike
+broken_bikes = stn.release_broken_bikes
+raise "didn't release broken bikes" unless broken_bikes == [broken_bike]
+
+van.pick_up broken_bikes
+van.bikes == broken_bikes
+
+
+# As a maintainer of the system,
+# So that I can manage broken bikes and not disappoint users,
+# I'd like vans to take broken bikes from docking stations and deliver them to garages to be fixed.
+
+
