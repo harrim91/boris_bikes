@@ -6,10 +6,10 @@ describe DockingStation do
 
   describe "#release_bike" do
     it "returns a working docked bike" do
-      bike = Bike.new
+      bike = double(:bike)
       subject.dock(bike)
       released_bike = subject.release_bike
-      expect(released_bike).to be_a Bike
+      expect(released_bike).to be_a double(:Bike)
       expect(released_bike).to eq bike
       expect(released_bike).to be_working
     end
@@ -19,15 +19,15 @@ describe DockingStation do
     end
 
     it "raises an error if there are only broken bikes" do
-      bike = Bike.new
+      bike = double(:bike)
       subject.dock bike
       bike.report_broken
       expect { subject.release_bike }.to raise_error "No working bikes available"
     end
 
     it "if not all bikes are broken, release the working bike" do
-      working_bike = Bike.new
-      broken_bike = Bike.new
+      working_bike = double(:bike)
+      broken_bike = double(:bike)
       subject.dock(working_bike)
       subject.dock(broken_bike)
       broken_bike.report_broken
@@ -35,7 +35,7 @@ describe DockingStation do
     end
 
     it "removes the bike from the docking station" do
-      bike = Bike.new
+      bike = double(:bike)
       subject.dock bike
       subject.release_bike
       expect(subject.bikes).not_to include bike
@@ -54,26 +54,26 @@ describe DockingStation do
 
   describe "#dock" do
     it "returns the docked bike" do
-      bike = Bike.new
+      bike = double(:bike)
       expect(subject.dock bike).to eq subject.bikes
     end
     it "can store up to defined capacity" do
-      subject.capacity.times { subject.dock Bike.new }
+      subject.capacity.times { subject.dock double(:bike) }
       expect(subject.bikes.length).to eq subject.capacity
     end
     it "raises an error if the dock is full" do
-      subject.capacity.times { subject.dock Bike.new }
-      expect {subject.dock Bike.new }.to raise_error "Docking station is full"
+      subject.capacity.times { subject.dock double(:bike) }
+      expect {subject.dock double(:bike) }.to raise_error "Docking station is full"
     end
   end
 
   describe "#bikes" do
     it "returns an array" do
-      subject.dock Bike.new
+      subject.dock double(:bike)
       expect(subject.bikes).to be_an Array
     end
     it "returns the docked bikes" do
-      bike = Bike.new
+      bike = double(:bike)
       subject.dock(bike)
       expect(subject.bikes).to eq [bike]
     end
