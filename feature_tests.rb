@@ -102,7 +102,6 @@ raise "released a broken bike" unless released_bike == bike2
 released_bike = stn.release_bike
 raise "released a broken bike" if released_bike.class = Bike
 
-
 # As a maintainer of the system,
 # So that I can manage broken bikes and not disappoint users,
 # I'd like docking stations to accept returning bikes (broken or not).
